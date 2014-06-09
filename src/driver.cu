@@ -36,4 +36,6 @@ int main(int argc, char **argv)
         return test_UVA();
     else if( !UNIFMEM.compare(argv[1]) )
         return test_uniformMem();
+	else
+		return default_test();
 }

@@ -1,7 +1,6 @@
 #include <iostream>
 #include "oddsEnds.h"
 
-
 __global__ void sequence_gpu(int *d_ptr, int length)
 {
     int elemID = blockIdx.x * blockDim.x + threadIdx.x;
@@ -11,7 +10,6 @@ __global__ void sequence_gpu(int *d_ptr, int length)
         d_ptr[elemID] = elemID;
     }
 }
-
 
 
 int default_test()
@@ -48,19 +46,18 @@ int default_test()
     bool bValid = true;
 
     for (int i=0; i<N && bValid; i++)
-    {
         if (h_ptr[i] != h_d_ptr[i])
         {
             bValid = false;
+			break;
         }
-    }
 
     ASSERT(cudaSuccess == cudaFree(d_ptr),       "Device deallocation failed", -1);
     ASSERT(cudaSuccess == cudaFreeHost(h_ptr),   "Host deallocation failed",   -1);
     ASSERT(cudaSuccess == cudaFreeHost(h_d_ptr), "Host deallocation failed",   -1);
 
     cout << "Memory deallocated successfully" << endl;
-    cout << "TEST Results " << endl;
+    cout << "TEST Results: " << bValid << endl;
 
     return bValid;
 }
