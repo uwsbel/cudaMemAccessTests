@@ -13,6 +13,7 @@ int main(int argc, char **argv)
     const string ZEROCOPY("zero-copy");
     const string UVA("UVA");
     const string UNIFMEM("UM");
+    const string ALL("all");
 
     if( argc==1 ) {
         cout << "Run using one of the following arguments:\n";
@@ -36,6 +37,18 @@ int main(int argc, char **argv)
         return test_UVA();
     else if( !UNIFMEM.compare(argv[1]) )
         return test_uniformMem();
+    else if( !ALL.compare(argv[1]) ) {
+		int success = 1;
+        success = (success & test_basic());
+        success = (success & test_pinned());
+        success = (success & test_zerocopy());
+        success = (success & test_UVA());
+        success = (success & test_uniformMem());
+
+		cout << "\nTest results overall: " << success << endl;
+
+		return success;
+	}
 	else
 		return default_test();
 }

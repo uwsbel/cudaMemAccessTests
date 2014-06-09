@@ -48,5 +48,5 @@ int test_basic()
 
     cout << "Memory deallocated successfully" << endl;
     cout << "TEST Results: " << bValid << endl;
-    return 0;
+    return bValid;
 }
